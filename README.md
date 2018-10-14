@@ -1,5 +1,5 @@
 # Project Name
-> str time machine
+srt time machine
 
 ## Table of contents
 * [General info](#general-info)
@@ -10,8 +10,8 @@
 * [Author](#author)
 
 ## General info
-Tool to shift time stamps in srt file
-Created to learn about file parsing
+Tool to shift time stamps in srt file.
+Created to learn about file parsing.
 
 ## Technologies
 * Python 3
