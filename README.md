@@ -1,5 +1,5 @@
 # Project Name
-srt time machine
+**srt time machine**
 
 ## Table of contents
 * [General info](#general-info)
@@ -11,7 +11,7 @@ srt time machine
 
 ## General info
 Tool to shift time stamps in srt file  
-Created to learn about file parsing
+Created to learn about simple file parsing
 
 ## Technologies
 * Python 3
@@ -20,10 +20,12 @@ Created to learn about file parsing
 Project is: _in progress_
 
 ## To-do
-* Everything
+* GUI maybe?
+* exe
+* test on more different files to see if assumptions made about file format are true
 
-## done
-* Not much
+## Done
+* Basic functionality with command line input
 
 ## Author
 Created by ghost

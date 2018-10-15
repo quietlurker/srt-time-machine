@@ -8,33 +8,38 @@ import datetime         ##datetime is for managing time
 #this function changes timestamp
 def timeshift(line_to_shift):
 
-        #line example
-        #00:00:02,785 --> 00:00:04,700
+        #split creates a list that can be referenced by list[index] starting from pos 0
+        line_split = line_to_shift.split('-->',)
 
-        #convert string to time
-        #https://stackoverflow.com/questions/466345/converting-string-into-datetime
-        #copy string to --> and use timedetla(seconds = x)
-        #copy string from --> and use timedetla(seconds = x)
+        #date_split[0] - first position on the list.
+        #.replace(' ','') - removes spaces
+        time_beg = line_split[0].replace(' ','')
+        time_end = line_split[1].replace(' ','')
+        time_end = time_end.replace('\n','') #without this datetime freaks out because there's an \r\n at the end of the line and it thinks it's another parameter to parse
+
+        #time format:
+        #%H means an hour in 24h format (00 to 23)
+        #%I means an hour ub 12h format (01 to 12)
+        time_beg_formatted = datetime.datetime.strptime(time_beg, '%H:%M:%S,%f')
+        time_end_formatted = datetime.datetime.strptime(time_end, '%H:%M:%S,%f')
 
 
-        #example
-        ##b = a + datetime.timedelta(seconds=3)
-        ##
-        ##import datetime
-        ##a = datetime.datetime(100,1,1,11,34,59)
-        ##b = a + datetime.timedelta(0,3) # days, seconds, then other fields.
-        ##print a.time()
-        ##print b.time()
+        #shift both timestamps
+        time_beg_shifted = time_beg_formatted + datetime.timedelta(seconds=seconds_to_shift)
+        time_end_shifted = time_end_formatted + datetime.timedelta(seconds=seconds_to_shift)
 
-        shifted_line = line_to_shift + 'This was a timestamp\n'
-        return  shifted_line
+        #back to string
+        time_beg_shifted_string = datetime.datetime.strftime(time_beg_shifted, '%H:%M:%S,%f')
+        time_end_shifted_string = datetime.datetime.strftime(time_end_shifted, '%H:%M:%S,%f')
+        
+        #format back the entire line
+        shifted_line = time_beg_shifted_string[:-3]+ ' --> '+ time_end_shifted_string[:-3] +'\n'
+        
+        return  str(shifted_line)
 
 
 #this is a function to find line with timestamp
 def search_and_replace(line_original):
-
-        #TEST: add a marker to show line was changed
-        #line_new = stripped_line + '--Modified\n'
 
         line_to_write = line_original
 
@@ -47,7 +52,6 @@ def search_and_replace(line_original):
         file_new.write(line_to_write)
 
 
-
 ## read a file
 ## ask for file name:
 file_original_name = input('ENTER FILE TO SHIFT: ')
@@ -58,6 +62,8 @@ file_original = open(file_original_name, 'r')
 #create new file (w: open for write, create if doesn't exist)
 file_new_name = 'shifted_' + file_original_name
 file_new = open(file_new_name, 'w')
+
+seconds_to_shift = float(input('ENTER FILE TO SHIFT (seconds.microseconds format): '))
 
 #read the content line by line and change each line
 for line in file_original:
