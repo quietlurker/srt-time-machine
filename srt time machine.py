@@ -13,8 +13,8 @@ def timeshift(line_to_shift):
 
         #date_split[0] - first position on the list.
         #.replace(' ','') - removes spaces
-        time_beg = line_split[0].replace(' ','')
-        time_end = line_split[1].replace(' ','')
+        time_beg = line_split[0]
+        time_end = line_split[1]
         time_end = time_end.replace('\n','') #without this datetime freaks out because there's an \r\n at the end of the line and it thinks it's another parameter to parse
 
         #time format:
@@ -31,23 +31,27 @@ def timeshift(line_to_shift):
         #back to string
         time_beg_shifted_string = datetime.datetime.strftime(time_beg_shifted, '%H:%M:%S,%f')
         time_end_shifted_string = datetime.datetime.strftime(time_end_shifted, '%H:%M:%S,%f')
-        
+        test = ''
+
         #format back the entire line
         shifted_line = time_beg_shifted_string[:-3]+ ' --> '+ time_end_shifted_string[:-3] +'\n'
-        
-        return  str(shifted_line)
+
+        return  shifted_line
 
 
 #this is a function to find line with timestamp
 def search_and_replace(line_original):
 
         line_to_write = line_original
-
+        
+        #remove spaces before check, and the remove tab
+        line_to_write_no_spaces = line_original.replace(' ', '').replace('\t', '')
+        
         #search for lines matching mask using re (regex)
-        timestamp_check = re.match('^\d\d:\d\d:\d\d,\d\d\d --> \d\d:\d\d:\d\d,\d\d\d$', line_to_write)
+        timestamp_check = re.match('^\d\d:\d\d:\d\d,\d\d\d-->\d\d:\d\d:\d\d,\d\d\d$', line_to_write_no_spaces)
 
         if timestamp_check:
-                line_to_write = timeshift(line_to_write)
+                line_to_write = timeshift(line_to_write_no_spaces)
 
         file_new.write(line_to_write)
 
@@ -67,8 +71,7 @@ seconds_to_shift = float(input('ENTER FILE TO SHIFT (seconds.microseconds format
 
 #read the content line by line and change each line
 for line in file_original:
-	#change_line(line.rstrip('\n')) #TEST: line.rstrip('\n') - removes end of line
-        search_and_replace(line) 
+    search_and_replace(line)
 
 #close the file
 file_original.close()
