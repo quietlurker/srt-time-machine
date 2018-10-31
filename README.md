@@ -20,12 +20,12 @@ Created to learn about simple file parsing
 Project is: _in progress_
 
 ## To-do
-* GUI maybe?
 * exe
-* test on more different files to see if assumptions made about file format are true
+* error management
 
 ## Done
 * Basic functionality with command line input
+* GUI
 
 ## Author
 Created by ghost
