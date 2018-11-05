@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*- 
-
 ###########################################################################
 ## Python code generated with wxFormBuilder (version Aug  8 2018)
 ## http://www.wxformbuilder.org/
@@ -140,11 +138,11 @@ class MainFrame ( wx.Frame ):
         #this adds _changed to filename and creates the full path with changed name
         full_newfile = os.path.join(os.path.split(original_file)[0],filename_new)
 
-        # open a file to read
-        file_original = open(original_file, 'r')
+        # open a file to read (encoding needed for pyinstaller, which treats the inputs as utf-8 by default and some srts are not UTF-8).
+        file_original = open(original_file, 'r', encoding="cp1250")
 
         #create new file (w: open for write, create if doesn't exist)
-        file_new = open(full_newfile, 'w')
+        file_new = open(full_newfile, 'w', encoding="cp1250")
 
         seconds_to_shift = float(self.InputSeconds.GetLineText(0))
 

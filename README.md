@@ -15,17 +15,19 @@ Created to learn about simple file parsing
 
 ## Technologies
 * Python 3
+* wxFormBuilder
+* pyinstaller
 
 ## Status
 Project is: _in progress_
 
 ## To-do
-* exe
 * error management
 
 ## Done
 * Basic functionality with command line input
 * GUI
+* exe
 
 ## Author
 Created by ghost
